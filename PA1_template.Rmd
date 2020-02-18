@@ -13,15 +13,19 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## What is mean total number of steps taken per day?
-### Please note that while plotting all histograms, I have chosen to use
-## breaks = 15 
+### Please note that while plotting all histograms, I have chosen to use, breaks = 15
 ### instead of the default value, I think default value for breaks is 5
-```{r stepsdata}
+
+```{r }
 #set working directory
-#setwd("datascience/Reproducible research/week2proj/")
+#setwd("datascience/Reproducible research/week2proj/RepData_PeerAssessment1")
 
 #Loading the data 
-stepsdata<-read.csv("activity.csv")
+#stepsdata<-read.csv("activity.csv")
+if(!file.exists('activity.csv')){
+    unzip('activity.zip')
+}
+stepsdata <- read.csv('activity.csv')
 summary(stepsdata)
 
 #Get complete cases 
@@ -43,6 +47,10 @@ median(steps_per_day$steps)
 ## What is the average daily activity pattern?
 
 ```{r }
+
+#Get complete cases 
+stepsminNA <- stepsdata[complete.cases(stepsdata), ]
+
 # average steps per interval for all days 
 avgsteps_perinterval <- aggregate(steps ~ interval, stepsminNA, mean)
 
@@ -118,4 +126,4 @@ print(plotn)
 
 ```
 
-## Some subtle differences in activities on weekdays and weekends like late start on weekends, however more steps later in the day on weekends.
+## Some differences in activities on weekdays and weekends like late start on weekends, however more steps later in the day on weekends.
